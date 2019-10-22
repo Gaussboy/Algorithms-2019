@@ -2,6 +2,8 @@ package lesson1;
 
 import kotlin.NotImplementedError;
 
+import java.util.Arrays;
+
 @SuppressWarnings("unused")
 public class JavaTasks {
     /**
@@ -150,6 +152,8 @@ public class JavaTasks {
      * Результат: second = [1 3 4 9 9 13 15 20 23 28]
      */
     static <T extends Comparable<T>> void mergeArrays(T[] first, T[] second) {
-        throw new NotImplementedError();
+        System.arraycopy(first, 0, second, 0, first.length);
+        Arrays.sort(second);
     }
 }
+

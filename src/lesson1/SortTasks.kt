@@ -2,6 +2,9 @@
 
 package lesson1
 
+import java.io.File
+import java.util.*
+
 /**
  * Сортировка времён
  *
@@ -33,7 +36,7 @@ package lesson1
  * В случае обнаружения неверного формата файла бросить любое исключение.
  */
 fun sortTimes(inputName: String, outputName: String) {
-    TODO()
+
 }
 
 /**
@@ -130,7 +133,22 @@ fun sortTemperatures(inputName: String, outputName: String) {
  * 2
  */
 fun sortSequence(inputName: String, outputName: String) {
-    TODO()
+    val figures = File(inputName).readLines().map { it.toInt() }
+    var сount = figures.groupingBy { it }.eachCount()
+    val mСount = сount.values.max()
+    сount = сount.filter { it.value == mСount }
+    val target = сount.keys.min()
+    val reducedNumbers = mutableListOf<Int>()
+    val app = mutableListOf<Int>()
+    figures.forEach {
+        if (it != target) {
+            reducedNumbers.add(it)
+        } else {
+            app.add(it)
+        }
+    }
+    val finalFile = (reducedNumbers + app).joinToString("\n")
+    File(outputName).writeText(finalFile)
 }
 
 /**
@@ -150,4 +168,6 @@ fun sortSequence(inputName: String, outputName: String) {
 fun <T : Comparable<T>> mergeArrays(first: Array<T>, second: Array<T?>) {
     TODO()
 }
+
+
 

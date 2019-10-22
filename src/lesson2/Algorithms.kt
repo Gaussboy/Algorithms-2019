@@ -2,6 +2,22 @@
 
 package lesson2
 
+
+private fun normal(n: Int): Boolean {
+    if (n % 2 == 0) {
+        return false
+    }
+    var i = 3
+    while (i * i <= n) {
+        if (n % i == 0) {
+            return false
+        }
+        i += 2
+    }
+    return true
+}
+
+
 /**
  * Получение наибольшей прибыли (она же -- поиск максимального подмассива)
  * Простая
@@ -80,7 +96,17 @@ fun optimizeBuyAndSell(inputName: String): Pair<Int, Int> {
  * но приветствуется попытка решить её самостоятельно.
  */
 fun josephTask(menNumber: Int, choiceInterval: Int): Int {
-    TODO()
+    if (menNumber <= 0 || choiceInterval <= 0) {
+        return 0;
+    }
+    if (choiceInterval == 1) {
+        return menNumber;
+    }
+    var count = 0;
+    for (i in 0 until menNumber) {
+        count = (count + choiceInterval) % (i + 1);
+    }
+    return count + 1;
 }
 
 /**
@@ -109,7 +135,15 @@ fun longestCommonSubstring(first: String, second: String): String {
  * Единица простым числом не считается.
  */
 fun calcPrimesNumber(limit: Int): Int {
-    TODO()
+    if (limit == 2) return 1
+    if (limit <= 1) return 0
+    var kolvo = 0
+    for (i in 1 until limit) {
+        if (normal(i)) {
+            kolvo++
+        }
+    }
+    return kolvo
 }
 
 /**
