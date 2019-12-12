@@ -2,6 +2,10 @@
 
 package lesson6
 
+import com.sun.xml.internal.bind.v2.TODO
+import java.util.*
+
+
 /**
  * Наибольшая общая подпоследовательность.
  * Средняя
@@ -15,7 +19,30 @@ package lesson6
  * При сравнении подстрок, регистр символов *имеет* значение.
  */
 fun longestCommonSubSequence(first: String, second: String): String {
-    TODO()
+    val maxL =
+        Array(first.length + 1) { IntArray(second.length + 1) }
+    for (i in 1..first.length) {
+        for (j in 1..second.length) {
+            if (first[i - 1] == second[j - 1]) maxL[i][j] =
+                maxL[i - 1][j - 1] + 1 else maxL[i][j] =
+                Math.max(maxL[i - 1][j], maxL[i][j - 1])
+        }
+    }
+    val result = StringBuilder()
+    var i = first.length
+    var j = second.length
+    while (i > 0 && j > 0) {
+        when {
+            first[i - 1] == second[j - 1] -> {
+                result.insert(0, first[i - 1])
+                i--
+                j--
+            }
+            maxL[i - 1][j] == maxL[i][j] -> i--
+            else -> j--
+        }
+    }
+    return result.toString()
 }
 
 /**
@@ -31,7 +58,34 @@ fun longestCommonSubSequence(first: String, second: String): String {
  * В примере ответами являются 2, 8, 9, 12 или 2, 5, 9, 12 -- выбираем первую из них.
  */
 fun longestIncreasingSubSequence(list: List<Int>): List<Int> {
-    TODO()
+    val startSize: Int = list.size
+    val maxL = IntArray(startSize)
+    val previous = IntArray(startSize)
+    for (i in 0 until startSize) {
+        maxL[i] = 1
+        previous[i] = -1
+        for (j in 0 until i) {
+            if (list[j] < list[i] && maxL[j] + 1 > maxL[i]) {
+                maxL[i] = maxL[j] + 1
+                previous[i] = j
+            }
+        }
+    }
+    var position = 0
+    var length = 0
+    for (i in 0 until startSize) {
+        if (maxL[i] > length) {
+            position = i
+            length = maxL[i]
+        }
+    }
+    val result: List<Int> = ArrayList()
+    if (list.isEmpty()) return result
+    while (position != -1) {
+        result.add(0, list[position])
+        position = previous[position]
+    }
+    return result
 }
 
 /**
